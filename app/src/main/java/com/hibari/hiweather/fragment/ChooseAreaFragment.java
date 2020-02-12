@@ -1,5 +1,6 @@
 package com.hibari.hiweather.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +20,9 @@ import com.hibari.hiweather.R;
 import com.hibari.hiweather.db.City;
 import com.hibari.hiweather.db.County;
 import com.hibari.hiweather.db.Province;
+import com.hibari.hiweather.ui.weather.WeatherActivity;
 import com.hibari.hiweather.utils.HttpUtil;
+import com.hibari.hiweather.utils.ProgressDialogUtil;
 import com.hibari.hiweather.utils.Utility;
 
 import org.jetbrains.annotations.NotNull;
@@ -111,6 +114,13 @@ public class ChooseAreaFragment extends Fragment {
                 } else if (currentLevel == LEVEL_CITY) {
                     selectedCity = cityList.get(position);
                     queryCounties();
+                } else if (currentLevel == LEVEL_COUNTY) {
+                    String weatherId = countyList.get(position).getWeatherId();
+                    Intent intent = new Intent(getActivity(), WeatherActivity.
+                            class);
+                    intent.putExtra("weather_id", weatherId);
+                    startActivity(intent);
+                    getActivity().finish();
                 }
             }
         });
@@ -144,7 +154,7 @@ public class ChooseAreaFragment extends Fragment {
             currentLevel = LEVEL_PROVINCE;
         } else {
             String address = "http://guolin.tech/api/china";
-            queryFromServer(address, "province");
+            queryFromOkHttpServer(address, "province");
         }
     }
 
@@ -170,7 +180,7 @@ public class ChooseAreaFragment extends Fragment {
         } else {
             int provinceCode = selectedProvince.getProvinceCode();
             String address = "http://guolin.tech/api/china/" + provinceCode;
-            queryFromServer(address, "city");
+            queryFromOkHttpServer(address, "city");
         }
     }
 
@@ -196,19 +206,19 @@ public class ChooseAreaFragment extends Fragment {
             int provinceCode = selectedProvince.getProvinceCode();
             int cityCode = selectedCity.getCityCode();
             String address = "http://guolin.tech/api/china/" + provinceCode + "/" + cityCode;
-            queryFromServer(address, "county");
+            queryFromOkHttpServer(address, "county");
         }
     }
 
-    private void queryFromServer(String address, String type) {
-        showProgressDialog();
+    private void queryFromOkHttpServer(String address, String type) {
+        ProgressDialogUtil.show(getActivity());
         HttpUtil.sendOkHttpRequest(address, new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        closeProgressDialog();
+                        ProgressDialogUtil.dismiss();
                         Toast.makeText(getContext(), "加载失败", Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -229,7 +239,7 @@ public class ChooseAreaFragment extends Fragment {
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            closeProgressDialog();
+                            ProgressDialogUtil.dismiss();
                             if ("province".equals(type)) {
                                 queryProvinces();
                             } else if ("city".equals(type)) {
@@ -242,20 +252,6 @@ public class ChooseAreaFragment extends Fragment {
                 }
             }
         });
-    }
-
-    private void closeProgressDialog() {
-        if (mProgressDialogFragment != null) {
-            mProgressDialogFragment.dismiss();
-        }
-    }
-
-    private void showProgressDialog() {
-        if (mProgressDialogFragment == null) {
-            mProgressDialogFragment = new ProgressDialogFragment();
-        }
-        mProgressDialogFragment.show(getChildFragmentManager(), "progress");
-
     }
 
 }
