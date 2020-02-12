@@ -1,12 +1,14 @@
 package com.hibari.hiweather.db;
 
+import org.litepal.crud.LitePalSupport;
+
 /**
  * @author: Hibari_Yo
  * @date: 2020-02-12
  * @description:
  */
 
-public class Country {
+public class County extends LitePalSupport {
 
     private int id;
     private String countryName;

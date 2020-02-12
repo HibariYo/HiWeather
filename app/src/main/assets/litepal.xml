@@ -7,7 +7,7 @@
     <list>
         <mapping class="com.hibari.hiweather.db.Province"/>
         <mapping class="com.hibari.hiweather.db.City"/>
-        <mapping class="com.hibari.hiweather.db.Country"/>
+        <mapping class="com.hibari.hiweather.db.County"/>
 
 
     </list>
