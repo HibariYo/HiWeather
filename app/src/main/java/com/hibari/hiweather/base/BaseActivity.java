@@ -1,19 +1,44 @@
 package com.hibari.hiweather.base;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 
-public abstract class BaseActivity<V extends BaseView, P extends BasePresenter<V>> extends AppCompatActivity {
+import com.hibari.hiweather.R;
+
+public abstract class BaseActivity<V extends BaseView, P extends BasePresenter<V>> extends AppCompatActivity implements BaseView {
 
     private V view;
     private P presenter;
 
+    public void startActivity(Class<?> clz) {
+        startActivity(new Intent(this, clz));
+    }
+
+    @Override
+    public void showMessage(String message) {
+        if (message != null) {
+            Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, getString(R.string.some_error), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void showMessage(@StringRes int resId) {
+        showMessage(getString(resId));
+    }
+
+    @Override
+    public BaseActivity getActivity() {
+        return this;
+    }
+
+    //-----------------------------------------------------------------------
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,22 +68,5 @@ public abstract class BaseActivity<V extends BaseView, P extends BasePresenter<V
     public abstract P createPresenter();
 
     public abstract V createView();
-
-    public Activity getActivity() {
-        return this;
-    }
-
-    protected void startActivity(Class<?> clz) {
-        startActivity(new Intent(this, clz));
-    }
-
-    protected void showToast(String msg) {
-        if(TextUtils.isEmpty(msg)){
-            return;
-        }
-        Toast.makeText(this,msg,Toast.LENGTH_SHORT).show();
-
-    }
-
 
 }

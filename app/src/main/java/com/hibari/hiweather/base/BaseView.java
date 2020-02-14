@@ -1,6 +1,6 @@
 package com.hibari.hiweather.base;
 
-import android.app.Activity;
+import androidx.annotation.StringRes;
 
 /**
  * @author: Hibari_Yo
@@ -10,5 +10,10 @@ import android.app.Activity;
 
 public interface BaseView {
 
-    Activity getActivity();
+    void showMessage(String message);
+
+    void showMessage(@StringRes int resId);
+
+    BaseActivity getActivity();
+
 }
