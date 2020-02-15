@@ -11,5 +11,18 @@ import com.hibari.hiweather.gson.Weather;
 
 public interface WeatherView extends BaseView {
 
+    /**
+     * 显示天气信息
+     * @param weather
+     */
     void showWeatherInfo(Weather.HeWeatherBean weather);
+
+    /**
+     * 显示背景图片
+     * @param bingPicAddress
+     */
+    void showBingPic(String bingPicAddress);
+
+    void setSwipreRefreshing(boolean flag);
+
 }

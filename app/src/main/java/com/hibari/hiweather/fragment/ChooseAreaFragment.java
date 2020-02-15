@@ -20,6 +20,7 @@ import com.hibari.hiweather.R;
 import com.hibari.hiweather.db.City;
 import com.hibari.hiweather.db.County;
 import com.hibari.hiweather.db.Province;
+import com.hibari.hiweather.ui.MainActivity;
 import com.hibari.hiweather.ui.weather.WeatherActivity;
 import com.hibari.hiweather.utils.HttpUtil;
 import com.hibari.hiweather.utils.ProgressDialogUtil;
@@ -115,12 +116,20 @@ public class ChooseAreaFragment extends Fragment {
                     selectedCity = cityList.get(position);
                     queryCounties();
                 } else if (currentLevel == LEVEL_COUNTY) {
-                    String weatherId = countyList.get(position).getWeatherId();
-                    Intent intent = new Intent(getActivity(), WeatherActivity.
-                            class);
-                    intent.putExtra("weather_id", weatherId);
-                    startActivity(intent);
-                    getActivity().finish();
+                    String countyId = countyList.get(position).getWeatherId();
+                    if (getActivity() instanceof MainActivity){
+                        Intent intent = new Intent(getActivity(), WeatherActivity.
+                                class);
+                        intent.putExtra("county_id", countyId);
+                        startActivity(intent);
+                        getActivity().finish();
+                    }else if (getActivity() instanceof WeatherActivity){
+                        WeatherActivity activity = (WeatherActivity) getActivity();
+                        activity.drawerLayout.closeDrawers();
+                        activity.swipeRefresh.setRefreshing(true);
+                        activity.getPresenter().requestWeather(countyId);
+                    }
+
                 }
             }
         });

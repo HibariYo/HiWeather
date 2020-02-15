@@ -35,9 +35,9 @@ public class Weather {
                     "basic=" + basic +
                     ", update=" + update +
                     ", status='" + status + '\'' +
-                    ", now=" + now +
-                    ", aqi=" + aqi +
-                    ", suggestion=" + suggestion +
+                    ", weather_now=" + now +
+                    ", weather_aqi=" + aqi +
+                    ", weather_suggestion=" + suggestion +
                     ", msg='" + msg + '\'' +
                     ", daily_forecast=" + daily_forecast +
                     '}';
@@ -47,10 +47,10 @@ public class Weather {
          * basic : {"cid":"CN101190401","location":"苏州","parent_city":"苏州","admin_area":"江苏","cnty":"中国","lat":"43.88684082","lon":"125.32450104","tz":"+8.00","city":"苏州","id":"CN101190401","update":{"loc":"2020-02-13 02:13","utc":"2020-02-12 18:13"}}
          * update : {"loc":"2020-02-13 02:13","utc":"2020-02-12 18:13"}
          * status : ok
-         * now : {"cloud":"91","cond_code":"101","cond_txt":"多云","fl":"2","hum":"14","pcpn":"0.0","pres":"1015","tmp":"6","vis":"16","wind_deg":"113","wind_dir":"东南风","wind_sc":"2","wind_spd":"10","cond":{"code":"101","txt":"多云"}}
+         * weather_now : {"cloud":"91","cond_code":"101","cond_txt":"多云","fl":"2","hum":"14","pcpn":"0.0","pres":"1015","tmp":"6","vis":"16","wind_deg":"113","wind_dir":"东南风","wind_sc":"2","wind_spd":"10","cond":{"code":"101","txt":"多云"}}
          * daily_forecast : [{"date":"2020-02-14","cond":{"txt_d":"多云"},"tmp":{"max":"8","min":"-1"}},{"date":"2020-02-15","cond":{"txt_d":"阴"},"tmp":{"max":"7","min":"-4"}},{"date":"2020-02-16","cond":{"txt_d":"多云"},"tmp":{"max":"6","min":"-3"}},{"date":"2020-02-17","cond":{"txt_d":"晴"},"tmp":{"max":"8","min":"-1"}},{"date":"2020-02-18","cond":{"txt_d":"晴"},"tmp":{"max":"7","min":"-4"}},{"date":"2020-02-19","cond":{"txt_d":"多云"},"tmp":{"max":"6","min":"-3"}}]
-         * aqi : {"city":{"aqi":"49","pm25":"33","qlty":"优"}}
-         * suggestion : {"comf":{"type":"comf","brf":"较舒适","txt":"白天天气晴好，早晚会感觉偏凉，午后舒适、宜人。"},"sport":{"type":"sport","brf":"较适宜","txt":"天气较好，无雨水困扰，较适宜进行各种运动，但因气温较低，在户外运动请注意增减衣物。"},"cw":{"type":"cw","brf":"较适宜","txt":"较适宜洗车，未来一天无雨，风力较小，擦洗一新的汽车至少能保持一天。"}}
+         * weather_aqi : {"city":{"weather_aqi":"49","pm25":"33","qlty":"优"}}
+         * weather_suggestion : {"comf":{"type":"comf","brf":"较舒适","txt":"白天天气晴好，早晚会感觉偏凉，午后舒适、宜人。"},"sport":{"type":"sport","brf":"较适宜","txt":"天气较好，无雨水困扰，较适宜进行各种运动，但因气温较低，在户外运动请注意增减衣物。"},"cw":{"type":"cw","brf":"较适宜","txt":"较适宜洗车，未来一天无雨，风力较小，擦洗一新的汽车至少能保持一天。"}}
          * msg : 所有天气数据均为模拟数据，仅用作学习目的使用，请勿当作真实的天气预报软件来使用。
          */
 
@@ -522,7 +522,7 @@ public class Weather {
             }
 
             /**
-             * city : {"aqi":"49","pm25":"33","qlty":"优"}
+             * city : {"weather_aqi":"49","pm25":"33","qlty":"优"}
              */
 
             private CityBean city;
@@ -539,14 +539,14 @@ public class Weather {
                 @Override
                 public String toString() {
                     return "CityBean{" +
-                            "aqi='" + aqi + '\'' +
+                            "weather_aqi='" + aqi + '\'' +
                             ", pm25='" + pm25 + '\'' +
                             ", qlty='" + qlty + '\'' +
                             '}';
                 }
 
                 /**
-                 * aqi : 49
+                 * weather_aqi : 49
                  * pm25 : 33
                  * qlty : 优
                  */
